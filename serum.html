@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+    body {
+
+      font-family: 'Arial', sans-serif;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      background-color: #fce9eb;
+    }
+
+    h1 {
+      color: #c02c67;
+      text-align: center;
+    }
+
+    .nav-link {
+      color: #a22c5b;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #bd3557;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      align-self: center;
+    }
+
+    img {
+      border-radius: 5px;
+      margin: 10px;
+      max-width: 20%;
+      height: auto;
+      
+    }
+
+    h3 {
+      color: #bd3557;
+    }
+
+    
+    h5 a {
+      color: #bd3557;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    h5 a:hover {
+      color: #a22c5b;
+    }
+  </style>
+</head>
+
+<body>
+  
+  <h1>Hair Growth Serum</h1>
+            <img class="card-img-top" src="/products/9.jpg" alt="Hair Growth Serum">
+        </div>
+        <div class="product-details ml-5">
+            <h5>Hair Growth Serum </h5>
+            <p style="color: #595555;">Price: Rs. 950</p>
+                
+
+            <label for="size">Select Size:</label>
+            <select id="size" style="background-color:  #bd3557; color: white; border: 1px solid white; padding: 5px;">
+                <option value="small" style="background-color: #bd3557; color: #FFD2D2;">S</option>
+                <option value="medium" style="background-color: #bd3557; color: #FFD2D2;">M</option>
+                <option value="large" style="background-color:  #bd3557; color: #FFD2D2;">L</option>
+            </select>
+            <div class="quantity-control mt-3">
+              <button class="quantity-button" style="border-top-left-radius: 4px; color: pink; border-bottom-left-radius: 4px; color: black;" id="decrease-quantity">-</button>
+              <span id="quantity" style="margin: 0 10px; font-weight: bold;">1</span>
+              <button class="quantity-button" style="border-top-right-radius: 4px; border-bottom-right-radius: 4px;" id="increase-quantity">+</button>
+          </div>
+            <br>
+            <a href="./cart.html">
+            <button type="button" style="color:#FFD2D2 ; background-color: black;" class="btn btn-lg px-4 me-md-2 fw-bold" id="add-to-cart">Add to cart</button>
+        </div>
+        <script>
+          const decreaseQuantityButton = document.getElementById("decrease-quantity");
+          const increaseQuantityButton = document.getElementById("increase-quantity");
+          const quantitySpan = document.getElementById("quantity");
+          const addToCartButton = document.getElementById("add-to-cart");
+
+          let currentQuantity = 1;
+
+          decreaseQuantityButton.addEventListener("click", function() {
+              if (currentQuantity > 1) {
+                  currentQuantity--;
+                  updateQuantityDisplay();
+              }
+          });
+
+          increaseQuantityButton.addEventListener("click", function() {
+              currentQuantity++;
+              updateQuantityDisplay();
+          });
+
+
+          function updateQuantityDisplay() {
+              quantitySpan.textContent = currentQuantity;
+          }
+
+          addToCartButton.addEventListener("click", function() {
+            const size = document.getElementById("size").value;
+            const imageUrl ="images/photo-1.jpg";
+              const productInfo = {
+                size: size,
+                imageUrl: imageUrl,
+                  name: "Body scrub",
+                  price: 665,
+                  quantity: currentQuantity 
+              };
+              const image = document.createElement("img");
+image.src ="C:\Users\LEGION S7\Downloads\Glowriousfinal\Glowrious website\products\1.jpg"; 
+image.alt = "bodyscrub"; 
+
+
+const cartItem = document.createElement("div"); 
+cartItem.appendChild(image); 
+
+              const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+              cartItems.push(productInfo);
+              localStorage.setItem("cartItems", JSON.stringify(cartItems));
+
+              alert("Item added to cart!");
+          });
+      </script>
+        </body>
+        </html>

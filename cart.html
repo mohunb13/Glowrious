@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang ="en">
+    <head>
+        <meta charset="UFT-8">
+        <title>My website</title>
+        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    </head>
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <style>
+    body {
+
+      font-family: 'Arial', sans-serif;
+      text-align: left;
+      margin: 0;
+      padding: 0;
+      background-color: #fce9eb;
+    }
+
+    h1 {
+      color: #c02c67;
+      text-align: center;
+    }
+
+    .nav-link {
+      color: #a22c5b;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: hwb(345 64% 3%);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      align-self: center;
+    }
+
+    img {
+      border-radius: 5px;
+      margin: 10px;
+      max-width: 20%;
+      height: auto;
+      
+    }
+
+    h3 {
+      color: #bd3557;
+    }
+
+    
+    h5 a {
+      color: #bd3557;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    h5 a:hover {
+      color: #a22c5b;
+    }
+  </style>
+    <body>
+      
+            <h1>Cart</h1>
+            <div id="cartItemsContainer">
+               
+            </div>
+            <div id="cartTotal">
+                <h4 >Total:</h4>
+                <p id="totalAmount">Rs. 0</p>
+            </div>
+            <a href="./checkout.html">
+            <button type="button" style="color:#FFD2D2 ; background-color: black;" class="btn btn-lg px-4 me-md-2 fw-bold">Proceed to Checkout</button>
+          </a>
+          </div>
+          <button><a href="./products.html">Back</a></button>
+            <script>
+                const cartItemsContainer = document.getElementById("cartItemsContainer");
+                const cartTotalAmount = document.getElementById("totalAmount");
+                const cartItems = JSON.parse(localStorage.getItem("cartItems")) || [];
+        
+                function updateCart() {
+                    cartItemsContainer.innerHTML = "";
+                    let total = 0;
+        
+                    cartItems.forEach((item, index) => {
+                        const cartItem = document.createElement("div");
+        
+                        if (typeof item.price === "number") {
+                            const subtotal = item.quantity * item.price;
+                            total += subtotal;
+        
+                            cartItem.style.display = "flex";
+        
+                            cartItem.innerHTML = `
+                            <img src="./products/1.jpg" alt="Logo" width="100" height="50">
+
+                            <div class="product-details">
+                                <p>${item.name}</p>
+                                <p>Price: Rs. ${item.price}</p>
+                                <p>Size: ${item.size} - Quantity: ${item.quantity} </p>
+                                <p>Subtotal: Rs. ${subtotal}</p>
+                                <button class="delete-button" data-index="${index}">Delete</button>
+                            </div>
+                        `;
+                        cartItem.style.marginBottom = "20px";
+                            cartItemsContainer.appendChild(cartItem);
+                        } else {
+                           
+                            console.error(`Invalid price for item at index ${index}`);
+                        }
+                    });
+        
+                    cartTotalAmount.textContent = `Total: Rs. ${total}`;
+                    setupDeleteButtons(); 
+                }
+        
+                function setupDeleteButtons() {
+                    const deleteButtons = document.querySelectorAll(".delete-button");
+                    deleteButtons.forEach(button => {
+                        button.addEventListener("click", function() {
+                            const index = parseInt(button.getAttribute("data-index"));
+                            cartItems.splice(index, 1);
+                            localStorage.setItem("cartItems", JSON.stringify(cartItems));
+                            updateCart(); // it will update the cart display after removing an item
+                        });
+                    });
+                }
+        
+                updateCart(); 
